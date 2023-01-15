@@ -1,0 +1,86 @@
+<!--
+
+To run this demo, you need to replace 'YOUR_API_KEY' with an API key from the ArcGIS Developers dashboard.
+
+Sign up for a free account and get an API key.
+
+https://developers.arcgis.com/documentation/mapping-apis-and-services/get-started/
+
+-->
+
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>Directions widget | Sample | ArcGIS Maps SDK for JavaScript 4.25</title>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+    h1{
+      text-align: center;
+     font-weight: bold;
+     
+    }
+  </style>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css" />
+  <script src="https://js.arcgis.com/4.25/"></script>
+
+  <script>
+    require(["esri/Map", "esri/views/MapView", "esri/widgets/Directions", "esri/layers/RouteLayer"], function (
+      Map,
+      MapView,
+      Directions,
+      RouteLayer
+    ) {
+
+      // An authorization string used to access the basemap, geocoding and routing services
+      const apiKey = "AAPK6bbe628c0b52488e960a80d34d32ab3cDojCW01Q67bSLQv4CGsHhdunSp5AvvM_0XXEkj8u42kZKZThN9uDD84OkitY9JDU";
+
+      // create a new RouteLayer, required for Directions widget
+      const routeLayer = new RouteLayer();
+
+      // new RouteLayer must be added to the map
+      const map = new Map({
+        basemap: "topo-vector",
+        layers: [routeLayer]
+      });
+
+      const view = new MapView({
+        zoom: 14,
+        center: [30.006261,  31.230389],
+        container: "viewDiv",
+        map: map
+      });
+
+      // new RouteLayer must be added to Directions widget
+      let directionsWidget = new Directions({
+        layer: routeLayer,
+        apiKey,
+        view
+      });
+
+      // Add the Directions widget to the top right corner of the view
+      view.ui.add(directionsWidget, {
+        position: "top-right"
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <h1>This App can Calculate direction between two places</h1>
+  
+  <div id="viewDiv"></div>
+</body>
+
+</html>
